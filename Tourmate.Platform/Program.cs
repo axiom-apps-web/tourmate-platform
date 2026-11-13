@@ -12,6 +12,12 @@ using Tourmate.Platform.Iam.Infrastructure.Tokens.Jwt.Configuration;
 using Tourmate.Platform.Iam.Infrastructure.Tokens.Jwt.Services;
 using Tourmate.Platform.Iam.Interfaces.Acl;
 using Tourmate.Platform.Iam.Resources;
+using Tourmate.Platform.FeedbackAndTourReviews.Application.CommandServices;
+using Tourmate.Platform.FeedbackAndTourReviews.Application.Internal.CommandServices;
+using Tourmate.Platform.FeedbackAndTourReviews.Application.Internal.QueryServices;
+using Tourmate.Platform.FeedbackAndTourReviews.Application.QueryServices;
+using Tourmate.Platform.FeedbackAndTourReviews.Domain.Repositories;
+using Tourmate.Platform.FeedbackAndTourReviews.Infrastructure.Persistence.EntityFrameworkCore.Configuration.Repositories;
 
 using Tourmate.Platform.Resources.Errors;
 using Tourmate.Platform.Resources.Shared;
@@ -121,6 +127,12 @@ builder.Services.AddScoped<IUserQueryService, UserQueryService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IHashingService, HashingService>();
 builder.Services.AddScoped<IIamContextFacade, IamContextFacade>();
+
+
+// FeedbackAndTourReviews Bounded Context Injection Configuration
+builder.Services.AddScoped<IReviewRepository, ReviewRepository>();
+builder.Services.AddScoped<IReviewCommandService, ReviewCommandService>();
+builder.Services.AddScoped<IReviewQueryService, ReviewQueryService>();
 
 // Mediator Configuration
 
