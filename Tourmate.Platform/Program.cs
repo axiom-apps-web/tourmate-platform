@@ -24,6 +24,12 @@ using Tourmate.Platform.Shared.Infrastructure.Persistence.EntityFrameworkCore.In
 using Tourmate.Platform.Shared.Infrastructure.Persistence.EntityFrameworkCore.Repositories;
 using Tourmate.Platform.Shared.Infrastructure.Pipeline.Middleware.Components;
 using Tourmate.Platform.Shared.Infrastructure.Pipeline.Middleware.Extensions;
+using Tourmate.Platform.TourMonitoring.Application.CommandServices;
+using Tourmate.Platform.TourMonitoring.Application.Internal.CommandServices;
+using Tourmate.Platform.TourMonitoring.Application.Internal.QueryServices;
+using Tourmate.Platform.TourMonitoring.Application.QueryServices;
+using Tourmate.Platform.TourMonitoring.Domain.Repositories;
+using Tourmate.Platform.TourMonitoring.Infrastructure.Persistence.EntityFrameworkCore.Configuration.Repositories;
 using Cortex.Mediator.Commands;
 using Cortex.Mediator.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
@@ -121,6 +127,11 @@ builder.Services.AddScoped<IUserQueryService, UserQueryService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IHashingService, HashingService>();
 builder.Services.AddScoped<IIamContextFacade, IamContextFacade>();
+
+// TourMonitoring Bounded Context Injection Configuration
+builder.Services.AddScoped<IActiveTourRepository, ActiveTourRepository>();
+builder.Services.AddScoped<IActiveTourCommandService, ActiveTourCommandService>();
+builder.Services.AddScoped<IActiveTourQueryService, ActiveTourQueryService>();
 
 // Mediator Configuration
 
