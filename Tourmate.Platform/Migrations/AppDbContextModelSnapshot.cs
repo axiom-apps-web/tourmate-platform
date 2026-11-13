@@ -19,6 +19,73 @@ namespace Tourmate.Platform.Migrations
                 .HasAnnotation("ProductVersion", "10.0.14")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
+            modelBuilder.Entity("Tourmate.Platform.FeedbackAndTourReviews.Domain.Model.Aggregates.Review", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    b.Property<DateTimeOffset?>("CreatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("created_at");
+
+                    b.Property<int>("Rating")
+                        .HasColumnType("int")
+                        .HasColumnName("rating");
+
+                    b.Property<int>("TourId")
+                        .HasColumnType("int")
+                        .HasColumnName("tour_id");
+
+                    b.Property<DateTimeOffset?>("UpdatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("updated_at");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int")
+                        .HasColumnName("user_id");
+
+                    b.HasKey("Id")
+                        .HasName("p_k_reviews");
+
+                    b.ToTable("reviews");
+                });
+
+            modelBuilder.Entity("Tourmate.Platform.FeedbackAndTourReviews.Domain.Model.Entities.Comment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)")
+                        .HasColumnName("content");
+
+                    b.Property<DateTimeOffset?>("CreatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("created_at");
+
+                    b.Property<int>("ReviewId")
+                        .HasColumnType("int")
+                        .HasColumnName("review_id");
+
+                    b.Property<DateTimeOffset?>("UpdatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("updated_at");
+
+                    b.HasKey("Id")
+                        .HasName("p_k_comments");
+
+                    b.HasIndex("ReviewId")
+                        .HasDatabaseName("i_x_comments_review_id");
+
+                    b.ToTable("comments");
+                });
+
             modelBuilder.Entity("Tourmate.Platform.Iam.Domain.Model.Aggregates.User", b =>
                 {
                     b.Property<int>("Id")
@@ -48,6 +115,21 @@ namespace Tourmate.Platform.Migrations
                         .HasName("p_k_users");
 
                     b.ToTable("users");
+                });
+
+            modelBuilder.Entity("Tourmate.Platform.FeedbackAndTourReviews.Domain.Model.Entities.Comment", b =>
+                {
+                    b.HasOne("Tourmate.Platform.FeedbackAndTourReviews.Domain.Model.Aggregates.Review", null)
+                        .WithMany("Comments")
+                        .HasForeignKey("ReviewId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("f_k_comments_reviews_review_id");
+                });
+
+            modelBuilder.Entity("Tourmate.Platform.FeedbackAndTourReviews.Domain.Model.Aggregates.Review", b =>
+                {
+                    b.Navigation("Comments");
                 });
 #pragma warning restore 612, 618
         }
