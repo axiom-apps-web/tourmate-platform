@@ -49,6 +49,57 @@ namespace Tourmate.Platform.Migrations
 
                     b.ToTable("users");
                 });
+
+            modelBuilder.Entity("Tourmate.Platform.TourMonitoring.Domain.Model.Aggregates.ActiveTour", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    b.Property<DateTimeOffset?>("CreatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("created_at");
+
+                    b.Property<double>("CurrentLatitude")
+                        .HasColumnType("double")
+                        .HasColumnName("current_latitude");
+
+                    b.Property<double>("CurrentLongitude")
+                        .HasColumnType("double")
+                        .HasColumnName("current_longitude");
+
+                    b.Property<DateTimeOffset?>("FinishedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("finished_at");
+
+                    b.Property<int>("GuideId")
+                        .HasColumnType("int")
+                        .HasColumnName("guide_id");
+
+                    b.Property<DateTimeOffset>("StartedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("started_at");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("status");
+
+                    b.Property<int>("TourScheduleId")
+                        .HasColumnType("int")
+                        .HasColumnName("tour_schedule_id");
+
+                    b.Property<DateTimeOffset?>("UpdatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("updated_at");
+
+                    b.HasKey("Id")
+                        .HasName("p_k_active_tours");
+
+                    b.ToTable("active_tours");
+                });
 #pragma warning restore 612, 618
         }
     }

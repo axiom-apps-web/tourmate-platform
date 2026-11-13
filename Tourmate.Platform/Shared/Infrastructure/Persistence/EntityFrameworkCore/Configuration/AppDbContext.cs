@@ -3,6 +3,7 @@ using Tourmate.Platform.Iam.Infrastructure.Persistence.EntityFrameworkCore.Confi
 using Tourmate.Platform.Shared.Infrastructure.Persistence.EntityFrameworkCore.Configuration.Extensions;
 using Tourmate.Platform.Shared.Infrastructure.Persistence.EntityFrameworkCore.Interceptors;
 using Microsoft.EntityFrameworkCore;
+using Tourmate.Platform.TourMonitoring.Infrastructure.Persistence.EntityFrameworkCore.Configuration.Extensions;
 
 namespace Tourmate.Platform.Shared.Infrastructure.Persistence.EntityFrameworkCore.Configuration;
 
@@ -34,12 +35,13 @@ public class AppDbContext(DbContextOptions options) : DbContext(options)
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
-
-     
-     
+        
 
         // IAM Context
         builder.ApplyIamConfiguration();
+        
+        // TourMonitoring Context
+        builder.ApplyTourMonitoringConfigurations();
 
         // General Naming Convention for the database objects
         builder.UseSnakeCaseNamingConvention();

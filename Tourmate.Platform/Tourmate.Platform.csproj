@@ -35,5 +35,9 @@
         <PackageReference Include="Cortex.Mediator" Version="3.1.2"/>
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="TourMonitoring\Resources\" />
+    </ItemGroup>
+
 
 </Project>
