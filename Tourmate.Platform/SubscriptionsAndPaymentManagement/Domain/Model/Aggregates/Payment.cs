@@ -30,6 +30,26 @@ public class Payment : AggregateRoot
         string status,
         DateTime? requestedAt = null)
     {
+        UpdateDetails(
+            agencyId,
+            planId,
+            amount,
+            currency,
+            status,
+            requestedAt ?? DateTime.UtcNow);
+    }
+
+    /// <summary>
+    /// Updates the payment information.
+    /// </summary>
+    public void UpdateDetails(
+        int agencyId,
+        PlanId planId,
+        decimal amount,
+        string currency,
+        string status,
+        DateTime requestedAt)
+    {
         if (agencyId <= 0)
             throw new ArgumentOutOfRangeException(
                 nameof(agencyId),
@@ -62,16 +82,21 @@ public class Payment : AggregateRoot
                 "Payment status cannot exceed 30 characters.",
                 nameof(status));
 
+        if (requestedAt == default)
+            throw new ArgumentException(
+                "Payment request date is required.",
+                nameof(requestedAt));
+
         AgencyId = agencyId;
         PlanId = planId;
         Amount = amount;
         Currency = currency;
         Status = status;
-        RequestedAt = requestedAt ?? DateTime.UtcNow;
+        RequestedAt = requestedAt;
     }
 
     /// <summary>
-    /// Updates the current payment status.
+    /// Updates the payment status.
     /// </summary>
     public void UpdateStatus(string status)
     {

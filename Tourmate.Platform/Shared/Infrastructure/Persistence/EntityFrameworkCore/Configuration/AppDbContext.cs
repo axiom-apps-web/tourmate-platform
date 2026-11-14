@@ -1,9 +1,9 @@
 using Tourmate.Platform.Iam.Infrastructure.Persistence.EntityFrameworkCore.Configuration.Extensions;
-
 using Tourmate.Platform.Shared.Infrastructure.Persistence.EntityFrameworkCore.Configuration.Extensions;
 using Tourmate.Platform.Shared.Infrastructure.Persistence.EntityFrameworkCore.Interceptors;
 using Microsoft.EntityFrameworkCore;
 using Tourmate.Platform.FeedbackAndTourReviews.Infrastructure.Persistence.EntityFrameworkCore.Configuration.Extensions;
+using Tourmate.Platform.SubscriptionsAndPaymentManagement.Infrastructure.Persistence.EntityFrameworkCore.Configuration.Extensions;  
 
 namespace Tourmate.Platform.Shared.Infrastructure.Persistence.EntityFrameworkCore.Configuration;
 
@@ -44,6 +44,11 @@ public class AppDbContext(DbContextOptions options) : DbContext(options)
         
         // FeedbackAndTourReviews Context
         builder.ApplyFeedbackAndTourReviewsConfiguration();
+        
+        
+        // SubscriptionsAndPaymentManagement Context
+        builder.ApplySubscriptionsAndPaymentManagementConfiguration();
+
 
         // General Naming Convention for the database objects
         builder.UseSnakeCaseNamingConvention();

@@ -19,6 +19,13 @@ using Tourmate.Platform.FeedbackAndTourReviews.Application.QueryServices;
 using Tourmate.Platform.FeedbackAndTourReviews.Domain.Repositories;
 using Tourmate.Platform.FeedbackAndTourReviews.Infrastructure.Persistence.EntityFrameworkCore.Configuration.Repositories;
 
+using Tourmate.Platform.SubscriptionsAndPaymentManagement.Application.CommandServices;
+using Tourmate.Platform.SubscriptionsAndPaymentManagement.Application.Internal.CommandServices;
+using Tourmate.Platform.SubscriptionsAndPaymentManagement.Application.Internal.QueryServices;
+using Tourmate.Platform.SubscriptionsAndPaymentManagement.Application.QueryServices;
+using Tourmate.Platform.SubscriptionsAndPaymentManagement.Domain.Repositories;
+using Tourmate.Platform.SubscriptionsAndPaymentManagement.Infrastructure.Persistence.EntityFrameworkCore.Repositories;
+
 using Tourmate.Platform.Resources.Errors;
 using Tourmate.Platform.Resources.Shared;
 using Tourmate.Platform.Shared.Domain.Repositories;
@@ -133,6 +140,23 @@ builder.Services.AddScoped<IIamContextFacade, IamContextFacade>();
 builder.Services.AddScoped<IReviewRepository, ReviewRepository>();
 builder.Services.AddScoped<IReviewCommandService, ReviewCommandService>();
 builder.Services.AddScoped<IReviewQueryService, ReviewQueryService>();
+
+// SubscriptionsAndPaymentManagement Bounded Context Injection Configuration
+
+// Repositories
+builder.Services.AddScoped<IPlanRepository, PlanRepository>();
+builder.Services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
+builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
+
+// Command Services
+builder.Services.AddScoped<IPlanCommandService, PlanCommandService>();
+builder.Services.AddScoped<ISubscriptionCommandService, SubscriptionCommandService>();
+builder.Services.AddScoped<IPaymentCommandService, PaymentCommandService>();
+
+// Query Services
+builder.Services.AddScoped<IPlanQueryService, PlanQueryService>();
+builder.Services.AddScoped<ISubscriptionQueryService, SubscriptionQueryService>();
+builder.Services.AddScoped<IPaymentQueryService, PaymentQueryService>();
 
 // Mediator Configuration
 

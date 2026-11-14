@@ -117,6 +117,115 @@ namespace Tourmate.Platform.Migrations
                     b.ToTable("users");
                 });
 
+            modelBuilder.Entity("Tourmate.Platform.SubscriptionsAndPaymentManagement.Domain.Model.Aggregates.Payment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    b.Property<int>("AgencyId")
+                        .HasColumnType("int")
+                        .HasColumnName("agency_id");
+
+                    b.Property<decimal>("Amount")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)")
+                        .HasColumnName("amount");
+
+                    b.Property<string>("Currency")
+                        .IsRequired()
+                        .HasMaxLength(3)
+                        .HasColumnType("varchar(3)")
+                        .HasColumnName("currency");
+
+                    b.Property<int>("PlanId")
+                        .HasColumnType("int")
+                        .HasColumnName("plan_id");
+
+                    b.Property<DateTime>("RequestedAt")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("requested_at");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("varchar(30)")
+                        .HasColumnName("status");
+
+                    b.HasKey("Id")
+                        .HasName("p_k_subscription_payments");
+
+                    b.HasIndex("PlanId")
+                        .HasDatabaseName("i_x_subscription_payments_plan_id");
+
+                    b.ToTable("subscription_payments", (string)null);
+                });
+
+            modelBuilder.Entity("Tourmate.Platform.SubscriptionsAndPaymentManagement.Domain.Model.Aggregates.Plan", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(120)
+                        .HasColumnType("varchar(120)")
+                        .HasColumnName("name");
+
+                    b.Property<decimal>("PriceAmount")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)")
+                        .HasColumnName("price_amount");
+
+                    b.Property<string>("PriceCurrency")
+                        .IsRequired()
+                        .HasMaxLength(3)
+                        .HasColumnType("varchar(3)")
+                        .HasColumnName("price_currency");
+
+                    b.HasKey("Id")
+                        .HasName("p_k_subscription_plans");
+
+                    b.ToTable("subscription_plans", (string)null);
+                });
+
+            modelBuilder.Entity("Tourmate.Platform.SubscriptionsAndPaymentManagement.Domain.Model.Aggregates.Subscription", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    b.Property<DateTime?>("ActivatedAt")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("activated_at");
+
+                    b.Property<int>("AgencyId")
+                        .HasColumnType("int")
+                        .HasColumnName("agency_id");
+
+                    b.Property<int>("PlanId")
+                        .HasColumnType("int")
+                        .HasColumnName("plan_id");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("varchar(30)")
+                        .HasColumnName("status");
+
+                    b.HasKey("Id")
+                        .HasName("p_k_agency_subscriptions");
+
+                    b.HasIndex("PlanId")
+                        .HasDatabaseName("i_x_agency_subscriptions_plan_id");
+
+                    b.ToTable("agency_subscriptions", (string)null);
+                });
+
             modelBuilder.Entity("Tourmate.Platform.FeedbackAndTourReviews.Domain.Model.Entities.Comment", b =>
                 {
                     b.HasOne("Tourmate.Platform.FeedbackAndTourReviews.Domain.Model.Aggregates.Review", null)
@@ -125,6 +234,26 @@ namespace Tourmate.Platform.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("f_k_comments_reviews_review_id");
+                });
+
+            modelBuilder.Entity("Tourmate.Platform.SubscriptionsAndPaymentManagement.Domain.Model.Aggregates.Payment", b =>
+                {
+                    b.HasOne("Tourmate.Platform.SubscriptionsAndPaymentManagement.Domain.Model.Aggregates.Plan", null)
+                        .WithMany()
+                        .HasForeignKey("PlanId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("f_k_subscription_payments_subscription_plans_plan_id");
+                });
+
+            modelBuilder.Entity("Tourmate.Platform.SubscriptionsAndPaymentManagement.Domain.Model.Aggregates.Subscription", b =>
+                {
+                    b.HasOne("Tourmate.Platform.SubscriptionsAndPaymentManagement.Domain.Model.Aggregates.Plan", null)
+                        .WithMany()
+                        .HasForeignKey("PlanId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("f_k_agency_subscriptions_subscription_plans_plan_id");
                 });
 
             modelBuilder.Entity("Tourmate.Platform.FeedbackAndTourReviews.Domain.Model.Aggregates.Review", b =>

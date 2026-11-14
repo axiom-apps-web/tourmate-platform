@@ -5,13 +5,9 @@ namespace Tourmate.Platform.SubscriptionsAndPaymentManagement.Domain.Model.Comma
 /// <summary>
 /// Command to create a new agency subscription.
 /// </summary>
-/// <param name="AgencyId">
-/// Identifier of the agency.
-/// </param>
-/// <param name="PlanId">
-/// Identifier of the selected subscription plan.
-/// </param>
 public record CreateSubscriptionCommand(
     int AgencyId,
-    PlanId PlanId
+    PlanId PlanId,
+    string Status = "ACTIVE",
+    DateTime? ActivatedAt = null
 );
