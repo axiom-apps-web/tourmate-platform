@@ -34,6 +34,15 @@ public partial class ActiveTour: AggregateRoot
     public ActiveTour(CreateActiveTourCommand command) : this(command.TourScheduleId, command.GuideId, command.CurrentLatitude, command.CurrentLongitude)
     {
     }
+
+    public ActiveTour Update(TourScheduleId tourScheduleId, GuideId guideId, double currentLatitude, double currentLongitude)
+    {
+        TourScheduleId = tourScheduleId;
+        GuideId = guideId;
+        CurrentLatitude = currentLatitude;
+        CurrentLongitude = currentLongitude;
+        return this;
+    }
     
     public ActiveTourId Id { get;  }
     public TourScheduleId TourScheduleId { get; private set; }

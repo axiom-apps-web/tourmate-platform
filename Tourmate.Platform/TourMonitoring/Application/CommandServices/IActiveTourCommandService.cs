@@ -17,4 +17,14 @@ public interface IActiveTourCommandService
     ///     The created <see cref="ActiveTour" /> entity.
     /// </returns>
     Task<Result<ActiveTour>> Handle(CreateActiveTourCommand command, CancellationToken cancellationToken);
+
+    /// <summary>
+    ///     Updates an active tour.
+    /// </summary>
+    Task<Result<ActiveTour>> Handle(UpdateActiveTourCommand command, CancellationToken cancellationToken);
+
+    /// <summary>
+    ///     Deletes an active tour.
+    /// </summary>
+    Task<Result> Handle(DeleteActiveTourCommand command, CancellationToken cancellationToken);
 }

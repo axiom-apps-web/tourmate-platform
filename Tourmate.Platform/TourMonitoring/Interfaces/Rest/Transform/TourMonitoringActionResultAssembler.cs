@@ -42,7 +42,30 @@ public static class TourMonitoringActionResultAssembler
         return problemDetailsFactory.CreateProblemDetails(controller, statusCode, result.Error, result.Message);
     }
 
-    
+    public static IActionResult ToActionResultFromUpdateActiveTourResult(
+        ControllerBase controller,
+        Result<ActiveTour> result,
+        IStringLocalizer<ErrorMessages> errorLocalizer,
+        ProblemDetailsFactory problemDetailsFactory,
+        Func<ActiveTour, IActionResult> successAction)
+    {
+        if (result.IsSuccess) return successAction(result.Value!);
+
+        var statusCode = ToStatusCodeFromTourMonitoringError((TourMonitoringError)result.Error!);
+        return problemDetailsFactory.CreateProblemDetails(controller, statusCode, result.Error, result.Message);
+    }
+
+    public static IActionResult ToActionResultFromDeleteActiveTourResult(
+        ControllerBase controller,
+        Result result,
+        IStringLocalizer<ErrorMessages> errorLocalizer,
+        ProblemDetailsFactory problemDetailsFactory)
+    {
+        if (result.IsSuccess) return controller.NoContent();
+
+        var statusCode = ToStatusCodeFromTourMonitoringError((TourMonitoringError)result.Error!);
+        return problemDetailsFactory.CreateProblemDetails(controller, statusCode, result.Error, result.Message);
+    }
 
     public static IActionResult ToActionResultFromGetActiveTourByIdResult(
         ControllerBase controller,
