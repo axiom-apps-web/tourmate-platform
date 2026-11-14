@@ -21,8 +21,8 @@ public partial class ActiveTour: AggregateRoot
         
         TourScheduleId = tourScheduleId;
         GuideId = guideId;
-        CurrentLatitude = 0;
-        CurrentLongitude = 0;
+        CurrentLatitude = currentLatitude;
+        CurrentLongitude = currentLongitude;
         StartedAt = DateTimeOffset.UtcNow;
         AddDomainEvent(new ActiveTourCreatedEvent(Id, TourScheduleId, GuideId));
     }

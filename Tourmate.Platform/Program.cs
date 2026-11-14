@@ -39,6 +39,12 @@ using Cortex.Mediator.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using Scalar.AspNetCore;
+using Tourmate.Platform.TourMonitoring.Application.CommandServices;
+using Tourmate.Platform.TourMonitoring.Application.Internal.CommandServices;
+using Tourmate.Platform.TourMonitoring.Application.Internal.QueryServices;
+using Tourmate.Platform.TourMonitoring.Application.QueryServices;
+using Tourmate.Platform.TourMonitoring.Domain.Repositories;
+using Tourmate.Platform.TourMonitoring.Infrastructure.Persistence.EntityFrameworkCore.Configuration.Repositories;
 // Added for ProblemDetailsFactory
 // Added for base ProblemDetailsFactory
 // Added for IamMessages
@@ -146,7 +152,15 @@ builder.Services.AddScoped<IncidentQueryService>();
 builder.Services.AddScoped<LocationCommandService>();
 builder.Services.AddScoped<LocationQueryService>();
 
+// TourMonitoring Bounded Context Injection Configuration
+builder.Services.AddScoped<IActiveTourRepository, ActiveTourRepository>();
+builder.Services.AddScoped<IActiveTourCommandService, ActiveTourCommandService>();
+builder.Services.AddScoped<IActiveTourQueryService, ActiveTourQueryService>();
+
+
 // Mediator Configuration
+
+
 
 // Add Mediator Injection Configuration
 builder.Services.AddScoped(typeof(ICommandPipelineBehavior<>), typeof(LoggingCommandBehavior<>));
