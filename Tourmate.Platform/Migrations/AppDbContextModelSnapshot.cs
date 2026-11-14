@@ -117,6 +117,146 @@ namespace Tourmate.Platform.Migrations
                     b.ToTable("users");
                 });
 
+            modelBuilder.Entity("Tourmate.Platform.SafetyAndIncidentManagement.Domain.Model.Aggregates.Incident", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    b.Property<int>("ActiveTourId")
+                        .HasColumnType("int")
+                        .HasColumnName("active_tour_id");
+
+                    b.Property<DateTimeOffset?>("CreatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("created_at");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("longtext")
+                        .HasColumnName("description");
+
+                    b.Property<double>("Latitude")
+                        .HasColumnType("double")
+                        .HasColumnName("latitude");
+
+                    b.Property<double>("Longitude")
+                        .HasColumnType("double")
+                        .HasColumnName("longitude");
+
+                    b.Property<DateTimeOffset>("ReportedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("reported_at");
+
+                    b.Property<int>("ReportedByUserId")
+                        .HasColumnType("int")
+                        .HasColumnName("reported_by_user_id");
+
+                    b.Property<string>("ReporterRole")
+                        .IsRequired()
+                        .HasColumnType("longtext")
+                        .HasColumnName("reporter_role");
+
+                    b.Property<string>("ResolutionNote")
+                        .HasColumnType("longtext")
+                        .HasColumnName("resolution_note");
+
+                    b.Property<string>("Severity")
+                        .IsRequired()
+                        .HasColumnType("longtext")
+                        .HasColumnName("severity");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("longtext")
+                        .HasColumnName("status");
+
+                    b.Property<DateTimeOffset?>("UpdatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("updated_at");
+
+                    b.Property<string>("Uuid")
+                        .IsRequired()
+                        .HasColumnType("longtext")
+                        .HasColumnName("uuid");
+
+                    b.HasKey("Id")
+                        .HasName("p_k_incidents");
+
+                    b.ToTable("incidents");
+                });
+
+            modelBuilder.Entity("Tourmate.Platform.SafetyAndIncidentManagement.Domain.Model.Aggregates.LocationRecord", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    b.Property<string>("Alerts")
+                        .HasColumnType("longtext")
+                        .HasColumnName("alerts");
+
+                    b.Property<DateTimeOffset?>("CreatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("created_at");
+
+                    b.Property<string>("ExpectedLatitude")
+                        .HasColumnType("longtext")
+                        .HasColumnName("expected_latitude");
+
+                    b.Property<string>("ExpectedLongitude")
+                        .HasColumnType("longtext")
+                        .HasColumnName("expected_longitude");
+
+                    b.Property<int>("ExpeditionId")
+                        .HasColumnType("int")
+                        .HasColumnName("expedition_id");
+
+                    b.Property<int?>("IncidentId")
+                        .HasColumnType("int")
+                        .HasColumnName("incident_id");
+
+                    b.Property<string>("Latitude")
+                        .IsRequired()
+                        .HasColumnType("longtext")
+                        .HasColumnName("latitude");
+
+                    b.Property<string>("Longitude")
+                        .IsRequired()
+                        .HasColumnType("longtext")
+                        .HasColumnName("longitude");
+
+                    b.Property<DateTimeOffset>("RecordedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("recorded_at");
+
+                    b.Property<string>("Telemetry")
+                        .HasColumnType("longtext")
+                        .HasColumnName("telemetry");
+
+                    b.Property<int>("TouristId")
+                        .HasColumnType("int")
+                        .HasColumnName("tourist_id");
+
+                    b.Property<DateTimeOffset?>("UpdatedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("updated_at");
+
+                    b.Property<string>("Wearables")
+                        .HasColumnType("longtext")
+                        .HasColumnName("wearables");
+
+                    b.HasKey("Id")
+                        .HasName("p_k_location_records");
+
+                    b.HasIndex("IncidentId")
+                        .HasDatabaseName("i_x_location_records_incident_id");
+
+                    b.ToTable("location_records");
+                });
+
             modelBuilder.Entity("Tourmate.Platform.FeedbackAndTourReviews.Domain.Model.Entities.Comment", b =>
                 {
                     b.HasOne("Tourmate.Platform.FeedbackAndTourReviews.Domain.Model.Aggregates.Review", null)
@@ -125,6 +265,15 @@ namespace Tourmate.Platform.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("f_k_comments_reviews_review_id");
+                });
+
+            modelBuilder.Entity("Tourmate.Platform.SafetyAndIncidentManagement.Domain.Model.Aggregates.LocationRecord", b =>
+                {
+                    b.HasOne("Tourmate.Platform.SafetyAndIncidentManagement.Domain.Model.Aggregates.Incident", null)
+                        .WithMany()
+                        .HasForeignKey("IncidentId")
+                        .OnDelete(DeleteBehavior.SetNull)
+                        .HasConstraintName("f_k_location_records_incidents_incident_id");
                 });
 
             modelBuilder.Entity("Tourmate.Platform.FeedbackAndTourReviews.Domain.Model.Aggregates.Review", b =>
