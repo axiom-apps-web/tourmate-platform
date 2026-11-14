@@ -18,6 +18,10 @@ using Tourmate.Platform.FeedbackAndTourReviews.Application.Internal.QueryService
 using Tourmate.Platform.FeedbackAndTourReviews.Application.QueryServices;
 using Tourmate.Platform.FeedbackAndTourReviews.Domain.Repositories;
 using Tourmate.Platform.FeedbackAndTourReviews.Infrastructure.Persistence.EntityFrameworkCore.Configuration.Repositories;
+using Tourmate.Platform.SafetyAndIncidentManagement.Application.Internal.CommandServices;
+using Tourmate.Platform.SafetyAndIncidentManagement.Application.Internal.QueryServices;
+using Tourmate.Platform.SafetyAndIncidentManagement.Domain.Repositories;
+using Tourmate.Platform.SafetyAndIncidentManagement.Infrastructure.Persistence.Repositories;
 
 using Tourmate.Platform.SubscriptionsAndPaymentManagement.Application.CommandServices;
 using Tourmate.Platform.SubscriptionsAndPaymentManagement.Application.Internal.CommandServices;
@@ -157,6 +161,13 @@ builder.Services.AddScoped<IPaymentCommandService, PaymentCommandService>();
 builder.Services.AddScoped<IPlanQueryService, PlanQueryService>();
 builder.Services.AddScoped<ISubscriptionQueryService, SubscriptionQueryService>();
 builder.Services.AddScoped<IPaymentQueryService, PaymentQueryService>();
+// SafetyAndIncidentManagement Bounded Context Injection Configuration
+builder.Services.AddScoped<IIncidentRepository, IncidentRepository>();
+builder.Services.AddScoped<ILocationRepository, LocationRepository>();
+builder.Services.AddScoped<IncidentCommandService>();
+builder.Services.AddScoped<IncidentQueryService>();
+builder.Services.AddScoped<LocationCommandService>();
+builder.Services.AddScoped<LocationQueryService>();
 
 // Mediator Configuration
 
