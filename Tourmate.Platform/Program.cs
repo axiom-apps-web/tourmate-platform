@@ -39,6 +39,12 @@ using Cortex.Mediator.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using Scalar.AspNetCore;
+using Tourmate.Platform.TourManagement.Application.CommandService;
+using Tourmate.Platform.TourManagement.Application.Internal.CommandServices;
+using Tourmate.Platform.TourManagement.Application.Internal.QueryServices;
+using Tourmate.Platform.TourManagement.Application.QueryService;
+using Tourmate.Platform.TourManagement.Domain.Repositories;
+using Tourmate.Platform.TourManagement.Infrastructure.Persistence.EntityFrameworkCore.Repositories;
 using Tourmate.Platform.TourMonitoring.Application.CommandServices;
 using Tourmate.Platform.TourMonitoring.Application.Internal.CommandServices;
 using Tourmate.Platform.TourMonitoring.Application.Internal.QueryServices;
@@ -151,6 +157,14 @@ builder.Services.AddScoped<IncidentCommandService>();
 builder.Services.AddScoped<IncidentQueryService>();
 builder.Services.AddScoped<LocationCommandService>();
 builder.Services.AddScoped<LocationQueryService>();
+
+// TourManagement Bounded Context Injection Configuration
+builder.Services.AddScoped<ITourRepository, TourRepository>();
+builder.Services.AddScoped<ITourCommandService, TourCommandService>();
+builder.Services.AddScoped<ITourQueryService, TourQueryService>();
+builder.Services.AddScoped<ITourScheduleRepository, TourScheduleRepository>();
+builder.Services.AddScoped<ITourScheduleCommandService, TourScheduleCommandService>();
+builder.Services.AddScoped<ITourScheduleQueryService, TourScheduleQueryService>();
 
 // TourMonitoring Bounded Context Injection Configuration
 builder.Services.AddScoped<IActiveTourRepository, ActiveTourRepository>();
