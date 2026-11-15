@@ -215,15 +215,19 @@ var localizationOptions = new RequestLocalizationOptions()
     .AddSupportedUICultures(supportedCultures);
 
 app.UseRequestLocalization(localizationOptions);
-
+/*
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
     app.UseSwaggerUI(options =>
-        options.SwaggerEndpoint("/openapi/v1.json", "Learning Center Platform API v1"));
+        options.SwaggerEndpoint("/openapi/v1.json", "TourMate Platform API v1"));
     app.MapScalarApiReference();
 }
-
+*/
+app.MapOpenApi().AllowAnonymous();
+app.UseSwaggerUI(options =>
+    options.SwaggerEndpoint("/openapi/v1.json", "Tourmate Platform API v1"));
+app.MapScalarApiReference().AllowAnonymous();
 // Apply CORS Policy
 app.UseCors("AllowAllPolicy");
 
