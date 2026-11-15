@@ -1,1 +1,4 @@
 /Tourmate.Platform/bin/
+/Tourmate.Platform/obj/
+.idea/
+tourmate-platform.sln.DotSettings.user
