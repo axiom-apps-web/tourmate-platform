@@ -5,6 +5,7 @@ using Tourmate.Platform.TourMonitoring.Infrastructure.Persistence.EntityFramewor
 using Tourmate.Platform.Shared.Infrastructure.Persistence.EntityFrameworkCore.Configuration.Extensions;
 using Tourmate.Platform.Shared.Infrastructure.Persistence.EntityFrameworkCore.Interceptors;
 using Microsoft.EntityFrameworkCore;
+using Tourmate.Platform.TourManagement.Infrastructure.Persistence.EntityFrameworkCore.Configuration;
 
 namespace Tourmate.Platform.Shared.Infrastructure.Persistence.EntityFrameworkCore.Configuration;
 
@@ -45,6 +46,9 @@ public class AppDbContext(DbContextOptions options) : DbContext(options)
 
         // SafetyAndIncidentManagement Context
         builder.ApplySafetyAndIncidentManagementConfiguration();
+        
+        // TourManagement Context
+        builder.ApplyTourManagementConfiguration();
         
         //Tour Monitoring Context
         builder.ApplyTourMonitoringConfigurations();
