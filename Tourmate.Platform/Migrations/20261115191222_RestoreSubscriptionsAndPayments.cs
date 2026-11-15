@@ -7,7 +7,7 @@ using MySql.EntityFrameworkCore.Metadata;
 namespace Tourmate.Platform.Migrations
 {
     /// <inheritdoc />
-    public partial class AddSubscriptionsAndPayments : Migration
+    public partial class RestoreSubscriptionsAndPayments : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

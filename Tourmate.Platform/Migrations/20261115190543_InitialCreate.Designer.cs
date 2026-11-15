@@ -11,7 +11,7 @@ using Tourmate.Platform.Shared.Infrastructure.Persistence.EntityFrameworkCore.Co
 namespace Tourmate.Platform.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20261114220102_InitialCreate")]
+    [Migration("20261115190543_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
