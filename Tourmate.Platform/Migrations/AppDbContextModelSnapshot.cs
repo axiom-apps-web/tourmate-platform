@@ -366,6 +366,117 @@ namespace Tourmate.Platform.Migrations
                     b.ToTable("agency_subscriptions", (string)null);
                 });
 
+            modelBuilder.Entity("Tourmate.Platform.TourManagement.Domain.Model.Aggregates.Tour", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    b.Property<int>("AgencyId")
+                        .HasColumnType("int")
+                        .HasColumnName("agency_id");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("longtext")
+                        .HasColumnName("status");
+
+                    b.HasKey("Id")
+                        .HasName("p_k_tours");
+
+                    b.ToTable("tours");
+                });
+
+            modelBuilder.Entity("Tourmate.Platform.TourManagement.Domain.Model.Aggregates.TourSchedule", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    b.Property<int>("MaxCapacity")
+                        .HasColumnType("int")
+                        .HasColumnName("max_capacity");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("longtext")
+                        .HasColumnName("status");
+
+                    b.Property<int>("TourId")
+                        .HasColumnType("int")
+                        .HasColumnName("tour_id");
+
+                    b.HasKey("Id")
+                        .HasName("p_k_tour_schedules");
+
+                    b.ToTable("tour_schedules");
+                });
+
+            modelBuilder.Entity("Tourmate.Platform.TourManagement.Domain.Model.Entities.Checkpoint", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("longtext")
+                        .HasColumnName("description");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext")
+                        .HasColumnName("name");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("int")
+                        .HasColumnName("order");
+
+                    b.Property<int>("TourId")
+                        .HasColumnType("int")
+                        .HasColumnName("tour_id");
+
+                    b.HasKey("Id")
+                        .HasName("p_k_checkpoints");
+
+                    b.HasIndex("TourId")
+                        .HasDatabaseName("i_x_checkpoints_tour_id");
+
+                    b.ToTable("checkpoints");
+                });
+
+            modelBuilder.Entity("Tourmate.Platform.TourManagement.Domain.Model.Entities.Participant", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    b.Property<DateTimeOffset>("JoinedAt")
+                        .HasColumnType("datetime")
+                        .HasColumnName("joined_at");
+
+                    b.Property<int>("TourScheduleId")
+                        .HasColumnType("int")
+                        .HasColumnName("tour_schedule_id");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int")
+                        .HasColumnName("user_id");
+
+                    b.HasKey("Id")
+                        .HasName("p_k_participants");
+
+                    b.HasIndex("TourScheduleId", "UserId")
+                        .IsUnique()
+                        .HasDatabaseName("i_x_participants_tour_schedule_id_user_id");
+
+                    b.ToTable("participants");
+                });
+
             modelBuilder.Entity("Tourmate.Platform.TourMonitoring.Domain.Model.Aggregates.ActiveTour", b =>
                 {
                     b.Property<int>("Id")
@@ -436,6 +547,150 @@ namespace Tourmate.Platform.Migrations
                         .HasConstraintName("f_k_location_records_incidents_incident_id");
                 });
 
+            modelBuilder.Entity("Tourmate.Platform.TourManagement.Domain.Model.Aggregates.Tour", b =>
+                {
+                    b.OwnsOne("Tourmate.Platform.TourManagement.Domain.Model.ValueObjects.Money", "Price", b1 =>
+                        {
+                            b1.Property<int>("Id")
+                                .HasColumnType("int")
+                                .HasColumnName("id");
+
+                            b1.Property<double>("Amount")
+                                .HasPrecision(18, 2)
+                                .HasColumnType("double")
+                                .HasColumnName("amount");
+
+                            b1.Property<string>("Currency")
+                                .IsRequired()
+                                .HasColumnType("longtext")
+                                .HasColumnName("currency");
+
+                            b1.HasKey("Id")
+                                .HasName("p_k_tours");
+
+                            b1.ToTable("tours");
+
+                            b1.WithOwner()
+                                .HasForeignKey("Id")
+                                .HasConstraintName("f_k_tours_tours_id");
+                        });
+
+                    b.OwnsOne("Tourmate.Platform.TourManagement.Domain.Model.ValueObjects.TourDetails", "Details", b1 =>
+                        {
+                            b1.Property<int>("Id")
+                                .HasColumnType("int")
+                                .HasColumnName("id");
+
+                            b1.Property<string>("Description")
+                                .IsRequired()
+                                .HasColumnType("longtext")
+                                .HasColumnName("description");
+
+                            b1.Property<string>("DifficultyLevel")
+                                .IsRequired()
+                                .HasColumnType("longtext")
+                                .HasColumnName("difficulty_level");
+
+                            b1.Property<string>("Duration")
+                                .IsRequired()
+                                .HasColumnType("longtext")
+                                .HasColumnName("duration");
+
+                            b1.Property<string>("Title")
+                                .IsRequired()
+                                .HasColumnType("longtext")
+                                .HasColumnName("title");
+
+                            b1.HasKey("Id")
+                                .HasName("p_k_tours");
+
+                            b1.ToTable("tours");
+
+                            b1.WithOwner()
+                                .HasForeignKey("Id")
+                                .HasConstraintName("f_k_tours_tours_id");
+                        });
+
+                    b.Navigation("Details")
+                        .IsRequired();
+
+                    b.Navigation("Price")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Tourmate.Platform.TourManagement.Domain.Model.Aggregates.TourSchedule", b =>
+                {
+                    b.OwnsOne("Tourmate.Platform.TourManagement.Domain.Model.ValueObjects.DepartureDateTime", "DepartureDateTime", b1 =>
+                        {
+                            b1.Property<int>("Id")
+                                .HasColumnType("int")
+                                .HasColumnName("id");
+
+                            b1.Property<DateTimeOffset>("Value")
+                                .HasColumnType("datetime")
+                                .HasColumnName("departure_date_time");
+
+                            b1.HasKey("Id")
+                                .HasName("p_k_tour_schedules");
+
+                            b1.ToTable("tour_schedules");
+
+                            b1.WithOwner()
+                                .HasForeignKey("Id")
+                                .HasConstraintName("f_k_tour_schedules_tour_schedules_id");
+                        });
+
+                    b.Navigation("DepartureDateTime")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Tourmate.Platform.TourManagement.Domain.Model.Entities.Checkpoint", b =>
+                {
+                    b.HasOne("Tourmate.Platform.TourManagement.Domain.Model.Aggregates.Tour", null)
+                        .WithMany("Checkpoints")
+                        .HasForeignKey("TourId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("f_k_checkpoints_tours_tour_id");
+
+                    b.OwnsOne("Tourmate.Platform.TourManagement.Domain.Model.ValueObjects.Coordinates", "Coordinates", b1 =>
+                        {
+                            b1.Property<int>("Id")
+                                .HasColumnType("int")
+                                .HasColumnName("id");
+
+                            b1.Property<double>("Xaxis")
+                                .HasColumnType("double")
+                                .HasColumnName("xaxis");
+
+                            b1.Property<double>("Yaxis")
+                                .HasColumnType("double")
+                                .HasColumnName("yaxis");
+
+                            b1.HasKey("Id")
+                                .HasName("p_k_checkpoints");
+
+                            b1.ToTable("checkpoints");
+
+                            b1.WithOwner()
+                                .HasForeignKey("Id")
+                                .HasConstraintName("f_k_checkpoints_checkpoints_id");
+                        });
+
+                    b.Navigation("Coordinates")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Tourmate.Platform.TourManagement.Domain.Model.Entities.Participant", b =>
+                {
+                    b.HasOne("Tourmate.Platform.TourManagement.Domain.Model.Aggregates.TourSchedule", null)
+                        .WithMany("Participants")
+                        .HasForeignKey("TourScheduleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("f_k_participants_tour_schedules_tour_schedule_id");
+                });
+
             modelBuilder.Entity("Tourmate.Platform.SubscriptionsAndPaymentManagement.Domain.Model.Aggregates.Payment", b =>
                 {
                     b.HasOne("Tourmate.Platform.SubscriptionsAndPaymentManagement.Domain.Model.Aggregates.Plan", null)
@@ -459,6 +714,16 @@ namespace Tourmate.Platform.Migrations
             modelBuilder.Entity("Tourmate.Platform.FeedbackAndTourReviews.Domain.Model.Aggregates.Review", b =>
                 {
                     b.Navigation("Comments");
+                });
+
+            modelBuilder.Entity("Tourmate.Platform.TourManagement.Domain.Model.Aggregates.Tour", b =>
+                {
+                    b.Navigation("Checkpoints");
+                });
+
+            modelBuilder.Entity("Tourmate.Platform.TourManagement.Domain.Model.Aggregates.TourSchedule", b =>
+                {
+                    b.Navigation("Participants");
                 });
 #pragma warning restore 612, 618
         }
